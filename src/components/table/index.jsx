@@ -1,7 +1,11 @@
+import { useDispatch } from 'react-redux';
 import React from "react";
+import { getPostsRequest } from '../../store/modules/posts/actions';
 import "./index.css"
 
+let page = 0;
 export default function Table(props) {
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -23,7 +27,7 @@ export default function Table(props) {
                                     <td>
                                         <div className="actions">
                                             {
-                                                props.columns.find(col => col.key === "actions")['value'].map((action,indexAction) => (
+                                                props.columns.find(col => col.key === "actions")['value'].map((action, indexAction) => (
                                                     <React.Fragment key={`row-${index}-action-${indexAction}`}>
                                                         {action == 'update' &&
                                                             <button className="btn btn-info">
@@ -47,8 +51,8 @@ export default function Table(props) {
                 </tbody>
             </table>
             <div className="pagination">
-                <a href="#">❮</a>
-                <a href="#">❯</a>
+                <button onClick={() => { page--; dispatch(getPostsRequest(page)) }}>❮</button>
+                <button onClick={() => { page++; dispatch(getPostsRequest(page)) }}>❯</button>
             </div>
         </>
     )

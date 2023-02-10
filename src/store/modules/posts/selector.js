@@ -16,3 +16,8 @@ export const errorSelector = createSelector(
     postsDomain,
     (domain) => domain.error
 );
+
+export const modalSelector = createSelector(
+    postsDomain,
+    (domain) => domain.isModalOpen
+);

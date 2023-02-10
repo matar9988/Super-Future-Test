@@ -1,7 +1,5 @@
 .modal {
-
-    display: none;
-
+    display: block;
     position: fixed;
     z-index: 1;
     padding-top: 100px;
@@ -34,4 +32,9 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .title {
+    font-size: 30px;
+    font-weight: 700;
   }

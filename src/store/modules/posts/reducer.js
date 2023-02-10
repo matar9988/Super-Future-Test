@@ -3,7 +3,8 @@ import * as Actions from './actions';
 const initialState = {
     data: [],
     loading: false,
-    error: false
+    error: false,
+    isModalOpen: false
   };
   
 
@@ -20,6 +21,12 @@ const counterReducer = (state = initialState, action) => {
 
     case Actions.GET_POSTS_FAILURE:
       return { ...state, loading: false, error: true };
+
+    case Actions.OPEN_MODAL:
+      return { ...state, isModalOpen: true};
+
+    case Actions.CLOSE_MODAL:
+      return { ...state, isModalOpen: false};
 
     default:
       return state;

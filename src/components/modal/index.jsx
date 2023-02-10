@@ -1,19 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../store/modules/posts/actions";
 import "./index.css"
 
-export default function Modal() {
-
+export default function Modal({ title, children }) {
+    const dispatch = useDispatch();
     return (
         <div className="modal">
             <div className="modal-content">
-                <span className="close">&times;</span>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
-                <p>Some text in the Modal..</p>
+                <span onClick={() => dispatch(closeModal())} className="close">&times;</span>
+                <div className="title">{title}</div>
+                {children}
             </div>
         </div>
     )

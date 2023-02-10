@@ -7,10 +7,10 @@ import {
    getPostsFailure
 } from './actions';
 
-export function* initPostsSaga() {
-    console.log(222)
+export function* initPostsSaga(action) {
+    console.log(action);
   try {
-    const posts = yield call(getPosts);
+    const posts = yield call(getPosts,action.payload.page);
     yield put(getPostsAction(posts));
     yield put(getPostsSuccess());
   } catch (e) {
