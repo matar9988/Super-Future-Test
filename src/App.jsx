@@ -32,7 +32,10 @@ function App() {
             <>
               <Table columns={columns} data={posts} />
               <FloatingButton />
-              {isModalOpen ? <Modal title={"Post Form:"}><PostForm/></Modal> : null}
+              {isModalOpen ?
+                <Modal title={"Post Form:"}>
+                  <PostForm />
+                </Modal> : null}
             </>
           )}
         </>

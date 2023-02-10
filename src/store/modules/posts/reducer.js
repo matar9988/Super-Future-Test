@@ -1,12 +1,12 @@
 import * as Actions from './actions';
 
 const initialState = {
-    data: [],
-    loading: false,
-    error: false,
-    isModalOpen: false
-  };
-  
+  data: [],
+  loading: false,
+  error: false,
+  isModalOpen: false
+};
+
 
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,19 +14,22 @@ const counterReducer = (state = initialState, action) => {
       return { ...state, data: action.payload.posts };
 
     case Actions.GET_POSTS_REQUEST:
+    case Actions.ADD_POST_REQUEST:
       return { ...state, loading: true, error: false };
 
+    case Actions.ADD_POST_SUCCESS:
     case Actions.GET_POSTS_SUCCESS:
       return { ...state, loading: false, error: false };
 
+    case Actions.ADD_POST_FAILURE:
     case Actions.GET_POSTS_FAILURE:
       return { ...state, loading: false, error: true };
 
     case Actions.OPEN_MODAL:
-      return { ...state, isModalOpen: true};
+      return { ...state, isModalOpen: true };
 
     case Actions.CLOSE_MODAL:
-      return { ...state, isModalOpen: false};
+      return { ...state, isModalOpen: false };
 
     default:
       return state;
