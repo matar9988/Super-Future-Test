@@ -6,7 +6,7 @@ import Modal from './components/modal';
 
 function App() {
   const [count, setCount] = useState(0);
-  const columns = ["id", "userId", "title", "body", "actions"];
+  const columns = [{key:"id",value:"id"}, {key:"userId",value:"userId"}, {key: "title", value: "title"}, {key: "body", value: "body"}, {key: "actions", value: ["update","delete"]}];
   const data = [
     {
       "userId": 1,

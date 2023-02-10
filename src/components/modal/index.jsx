@@ -4,9 +4,9 @@ import "./index.css"
 export default function Modal() {
 
     return (
-        <div class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
+        <div className="modal">
+            <div className="modal-content">
+                <span className="close">&times;</span>
                 <p>Some text in the Modal..</p>
                 <p>Some text in the Modal..</p>
                 <p>Some text in the Modal..</p>
