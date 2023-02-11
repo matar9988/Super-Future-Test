@@ -6,7 +6,8 @@ const initialState = {
   error: false,
   isModalOpen: false,
   selectedPost: {},
-  isUpdating: false
+  isUpdating: false,
+  isDeleting: false
 };
 
 
@@ -15,6 +16,7 @@ const counterReducer = (state = initialState, action) => {
     case Actions.GET_POSTS_ACTION:
       return { ...state, data: action.payload.posts };
 
+    case Actions.DELETE_POST_REQUEST:
     case Actions.UPDATE_POST_REQUEST:
     case Actions.GET_POSTS_REQUEST:
     case Actions.ADD_POST_REQUEST:
@@ -28,10 +30,18 @@ const counterReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: false, data: [...posts] }
     }
 
+    case Actions.DELETE_POST_SUCCESS: {
+      let posts = [...state.data];
+      let index = posts.findIndex((post) => post.id === action.payload.post.id);
+      posts.splice(index,1);
+      return { ...state, loading: false, error: false, data: [...posts] }
+    }
+
     case Actions.ADD_POST_SUCCESS:
     case Actions.GET_POSTS_SUCCESS:
       return { ...state, loading: false, error: false };
 
+    case Actions.DELETE_POST_FAILURE:
     case Actions.UPDATE_POST_FAILURE:
     case Actions.ADD_POST_FAILURE:
     case Actions.GET_POSTS_FAILURE:
@@ -41,11 +51,16 @@ const counterReducer = (state = initialState, action) => {
       return { ...state, isModalOpen: true };
 
     case Actions.CLOSE_MODAL:
-      return { ...state, isModalOpen: false, isUpdating: false, selectedPost: {} };
+      return { ...state, isModalOpen: false, isUpdating: false, isDeleting: false, selectedPost: {} };
 
     case Actions.UPDATE_POST: {
       Actions.openModal();
-      return { ...state, selectedPost: action.payload.post, isUpdating: true };
+      return { ...state, selectedPost: action.payload.post, isUpdating: true, isDeleting: false };
+    }
+
+    case Actions.DELETE_POST: {
+      Actions.openModal();
+      return { ...state, selectedPost: action.payload.post, isDeleting: true, isUpdating: false };
     }
 
     default:

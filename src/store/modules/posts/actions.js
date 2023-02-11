@@ -8,9 +8,13 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
 export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
 export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const UPDATE_POST = 'UPDATE_POST';
+export const DELETE_POST = 'DELETE_POST';
 
 export const getPostsRequest = (page = 0) => ({
     type: GET_POSTS_REQUEST,
@@ -57,6 +61,20 @@ export const updatePostFailure = () => ({
     type: UPDATE_POST_FAILURE
 });
 
+export const deletePostRequest = (post) => ({
+    type: DELETE_POST_REQUEST,
+    payload: { post }
+});
+
+export const deletePostSuccess = (post) => ({
+    type: DELETE_POST_SUCCESS,
+    payload: { post }
+});
+
+export const deletePostFailure = () => ({
+    type: DELETE_POST_FAILURE
+});
+
 export const openModal = () => ({
     type: OPEN_MODAL
 });
@@ -67,5 +85,10 @@ export const closeModal = () => ({
 
 export const updatePost = (post) => ({
     type: UPDATE_POST,
+    payload: { post }
+});
+
+export const deletePost = (post) => ({
+    type: DELETE_POST,
     payload: { post }
 });

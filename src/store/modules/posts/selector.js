@@ -31,3 +31,8 @@ export const updatingSelector = createSelector(
     postsDomain,
     (domain) => domain.isUpdating
 );
+
+export const deletingSelector = createSelector(
+    postsDomain,
+    (domain) => domain.isDeleting
+);

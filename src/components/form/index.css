@@ -9,3 +9,8 @@
 .wrapper > label {
     font-size: 20px;
 }
+
+#body-label {
+    position: relative;
+    top: -30%;
+}

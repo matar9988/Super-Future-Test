@@ -26,3 +26,14 @@ export async function updatePost(post) {
     });
     return res.json();
 }
+
+export async function deletePost(post) {
+    const res = await fetch(`${URL}/${post.id}`,{
+        method: 'DELETE',
+        body: JSON.stringify(post),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return res.json();
+}

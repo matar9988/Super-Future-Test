@@ -5,8 +5,9 @@ import FloatingButton from './components/floating-button';
 import Modal from './components/modal';
 import PostForm from './components/form';
 import { getPostsRequest } from './store/modules/posts/actions';
-import { dataSelector, errorSelector, loadingSelector, modalSelector, postSelector, updatingSelector } from './store/modules/posts/selector';
+import { dataSelector, errorSelector, loadingSelector, modalSelector, postSelector, updatingSelector, deletingSelector } from './store/modules/posts/selector';
 import "./App.css"
+import PostDelete from './components/post-delete';
 
 
 function App() {
@@ -18,13 +19,14 @@ function App() {
   const isModalOpen = useSelector(modalSelector);
   const selectedPost = useSelector(postSelector);
   const isUpdating = useSelector(updatingSelector);
+  const isDeleting = useSelector(deletingSelector);
 
   const columns = [{ key: "id", value: "id" }, { key: "userId", value: "userId" }, { key: "title", value: "title" }, { key: "body", value: "body" }, { key: "actions", value: ["update", "delete"] }];
 
   useEffect(() => {
     dispatch(getPostsRequest())
   }, [])
-  console.log(isUpdating)
+
   return (
     <>
       {error ? "Something went wrong!" : (
@@ -35,7 +37,10 @@ function App() {
               <FloatingButton />
               {isModalOpen ?
                 <Modal title={isUpdating ? "Update Form:" : "Post Form:"}>
-                  <PostForm post={selectedPost} isUpdating />
+                  {
+                    isDeleting ?
+                      <PostDelete post={selectedPost} /> : (isUpdating ? <PostForm post={selectedPost} isUpdating={isUpdating} /> : <PostForm isUpdating={isUpdating} />)
+                  }
                 </Modal> : null}
             </>
           )}

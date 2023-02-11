@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import React from "react";
-import { getPostsRequest, openModal, updatePost } from '../../store/modules/posts/actions';
+import { getPostsRequest, openModal, updatePost, deletePost } from '../../store/modules/posts/actions';
 import "./index.css"
 
 let page = 0;
@@ -35,7 +35,7 @@ export default function Table(props) {
                                                             </button>}
 
                                                         {action == 'delete' &&
-                                                            <button className="btn btn-danger">
+                                                            <button className="btn btn-danger" onClick={() => {dispatch(deletePost(row));dispatch(openModal())}}>
                                                                 <span className="glyphicon glyphicon-remove-circle"></span> Remove
                                                             </button>}
                                                     </React.Fragment>

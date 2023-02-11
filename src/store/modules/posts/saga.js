@@ -1,19 +1,23 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { getPosts, addPost, updatePost } from '../../../network/posts';
+import { getPosts, addPost, updatePost, deletePost } from '../../../network/posts';
 import {
   ADD_POST_REQUEST,
   GET_POSTS_REQUEST,
   UPDATE_POST_REQUEST,
+  DELETE_POST_REQUEST,
   getPostsAction,
   getPostsSuccess,
   getPostsFailure,
   addPostSuccess,
   addPostFailure,
   updatePostSuccess,
-  updatePostFailure
+  updatePostFailure,
+  deletePostSuccess,
+  deletePostFailure,
+  closeModal
 } from './actions';
 
-export function* initPostsSaga(action) {
+export function* getPostsSaga(action) {
   try {
     const posts = yield call(getPosts, action.payload.page);
     yield put(getPostsAction(posts));
@@ -28,6 +32,7 @@ export function* addPostSaga(action) {
   try {
     yield call(addPost, action.payload.post);
     yield put(addPostSuccess());
+    yield put(closeModal());
   } catch (e) {
     yield put(addPostFailure());
     console.log('Failed initializing the posts list.');
@@ -38,16 +43,29 @@ export function* updatePostSaga(action) {
   try {
     yield call(updatePost, action.payload.post);
     yield put(updatePostSuccess(action.payload.post));
+    yield put(closeModal());
   } catch (e) {
     yield put(updatePostFailure());
     console.log('Failed initializing the posts list.');
   }
 }
 
+export function* deletePostSaga(action) {
+  try {
+    yield call(deletePost, action.payload.post);
+    yield put(deletePostSuccess(action.payload.post));
+    yield put(closeModal());
+  } catch (e) {
+    yield put(deletePostFailure());
+    console.log('Failed initializing the posts list.');
+  }
+}
+
 export function* watchPostsSaga() {
   yield all([
-    takeLatest([GET_POSTS_REQUEST], initPostsSaga),
+    takeLatest([GET_POSTS_REQUEST], getPostsSaga),
     takeLatest([ADD_POST_REQUEST], addPostSaga),
     takeLatest([UPDATE_POST_REQUEST], updatePostSaga),
+    takeLatest([DELETE_POST_REQUEST], deletePostSaga),
   ])
 }

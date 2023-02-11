@@ -4,7 +4,7 @@ import "./index.css"
 import { addPostRequest, updatePostRequest, closeModal } from "../../store/modules/posts/actions";
 import { useDispatch } from "react-redux";
 
-export default function PostForm({ post = { userId: '', title: '', body: '', id }, isUpdating }) {
+export default function PostForm({ post = { userId: '', title: '', body: '', id:0 }, isUpdating }) {
     const dispatch = useDispatch();
 
     const submitAddPost = async (submittedData) => {
@@ -19,7 +19,6 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id 
         submitAddPost(values);
         setSubmitting(false);
         alert("Post Added!");
-        dispatch(closeModal())
         resetForm();
     };
 
@@ -27,7 +26,6 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id 
         submitEditPost(values);
         setSubmitting(false);
         alert("Post Updated!");
-        dispatch(closeModal())
         resetForm();
     }
 
@@ -65,8 +63,8 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id 
                         <div>
                             <ErrorMessage name="title" component="div" />
                         </div>
-                        <label>Body:</label>
-                        <Field name="body" />
+                        <label id="body-label">Body:</label>
+                        <Field name="body" as="textarea" />
                         <div>
                             <ErrorMessage name="body" component="div" />
                         </div>
