@@ -8,9 +8,14 @@ export default function Modal({ title, children }) {
     return (
         <div className="modal">
             <div className="modal-content">
-                <span onClick={() => dispatch(closeModal())} className="close">&times;</span>
-                <div className="title">{title}</div>
-                {children}
+                <div className="header-title">
+                    <span onClick={() => dispatch(closeModal())} className="close">&times;</span>
+                    {title}
+                </div>
+                <hr />
+                <div className="header-body">
+                    {children}
+                </div>
             </div>
         </div>
     )

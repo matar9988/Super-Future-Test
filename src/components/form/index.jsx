@@ -4,7 +4,7 @@ import "./index.css"
 import { addPostRequest, updatePostRequest, closeModal } from "../../store/modules/posts/actions";
 import { useDispatch } from "react-redux";
 
-export default function PostForm({ post = { userId: '', title: '', body: '', id:0 }, isUpdating }) {
+export default function PostForm({ post = { userId: '', title: '', body: '', id: 0 }, isUpdating }) {
     const dispatch = useDispatch();
 
     const submitAddPost = async (submittedData) => {
@@ -18,14 +18,12 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id:
     const addPost = (values, { setSubmitting, resetForm }) => {
         submitAddPost(values);
         setSubmitting(false);
-        alert("Post Added!");
         resetForm();
     };
 
     const editPost = (values, { setSubmitting, resetForm }) => {
         submitEditPost(values);
         setSubmitting(false);
-        alert("Post Updated!");
         resetForm();
     }
 
@@ -52,24 +50,29 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id:
             {({ isSubmitting }) => (
                 <Form>
                     <div className="wrapper">
-                        <label>User Id:</label>
-                        <Field name="userId" type="number" />
-                        <div>
-                            <ErrorMessage name="userId" component="div" />
+
+                        <div className="form-input">
+                            <div>User Id</div>
+                            <Field name="userId" type="number"/>
+                            <ErrorMessage className="error-message" name="userId" component="div" />
                         </div>
 
-                        <label>Title:</label>
-                        <Field name="title" />
-                        <div>
-                            <ErrorMessage name="title" component="div" />
+                        <div className="form-input">
+                            <div>Title</div>
+                            <Field name="title" />
+                            <ErrorMessage className="error-message" name="title" component="div" />
                         </div>
-                        <label id="body-label">Body:</label>
-                        <Field name="body" as="textarea" />
-                        <div>
-                            <ErrorMessage name="body" component="div" />
+
+                        <div className="form-input">
+                            <div id="body-label">Body</div>
+                            <Field name="body" as="textarea" rows="5" />
+                            <ErrorMessage className="error-message" name="body" component="div" />
                         </div>
+
                     </div>
-                    <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>Submit</button>
+                    <hr />
+                    <button type="submit" className="btn btn-primary btn-lg button" disabled={isSubmitting}>Submit</button>
+                    <button type="submit" className="btn btn-danger btn-lg button" onClick={() => dispatch(closeModal())}>Cancel</button>
                 </Form>
             )}
         </Formik>

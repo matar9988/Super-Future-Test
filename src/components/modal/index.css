@@ -2,7 +2,7 @@
   display: block;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 60px;
   left: 0;
   top: 0;
   width: 100%;
@@ -15,9 +15,19 @@
 .modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 60%;
+}
+
+
+.header-title {
+  font-size: 30px;
+  font-weight: 700;
+  padding: 20px 20px 0px 20px;
+}
+
+.header-body {
+  overflow: hidden;
 }
 
 .close {
@@ -32,14 +42,4 @@
   color: #000;
   text-decoration: none;
   cursor: pointer;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: 700;
-}
-
-.btn-group-lg>.btn, .btn-lg {
-  position: relative;
-  left: 90%;
 }

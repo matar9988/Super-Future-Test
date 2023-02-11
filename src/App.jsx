@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from './components/table';
-import FloatingButton from './components/floating-button';
+import Button from './components/button';
 import Modal from './components/modal';
 import PostForm from './components/form';
 import { getPostsRequest } from './store/modules/posts/actions';
@@ -21,7 +21,7 @@ function App() {
   const isUpdating = useSelector(updatingSelector);
   const isDeleting = useSelector(deletingSelector);
 
-  const columns = [{ key: "id", value: "id" }, { key: "userId", value: "userId" }, { key: "title", value: "title" }, { key: "body", value: "body" }, { key: "actions", value: ["update", "delete"] }];
+  const columns = [{ key: "id", placeholder: "ID" }, { key: "userId", placeholder: "User ID" }, { key: "title", placeholder: "Title" }, { key: "body", placeholder: "Body" }, { key: "actions", placeholder: "Actions", value: ["update", "delete"] }];
 
   useEffect(() => {
     dispatch(getPostsRequest())
@@ -33,13 +33,21 @@ function App() {
         <>
           {loading ? '...Loading' : (
             <>
-              <Table columns={columns} data={posts} />
-              <FloatingButton />
+              <div className='posts-container'>
+                <div className='post-table-title' style={{display:"flex"}}>
+                  <h3>Posts List</h3>
+                  <Button />
+                </div>
+                <Table columns={columns} data={posts} />
+              </div>
               {isModalOpen ?
-                <Modal title={isUpdating ? "Update Form:" : "Post Form:"}>
+                <Modal title={isDeleting ? "Delete Post" : (isUpdating ? "Update Post" : "Create Post")}>
                   {
                     isDeleting ?
-                      <PostDelete post={selectedPost} /> : (isUpdating ? <PostForm post={selectedPost} isUpdating={isUpdating} /> : <PostForm isUpdating={isUpdating} />)
+                      <PostDelete post={selectedPost} />
+                      : (isUpdating ?
+                        <PostForm post={selectedPost} isUpdating={isUpdating} />
+                        : <PostForm isUpdating={isUpdating} />)
                   }
                 </Modal> : null}
             </>
