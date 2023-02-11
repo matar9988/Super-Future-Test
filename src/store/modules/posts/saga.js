@@ -1,13 +1,16 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { getPosts, addPost } from '../../../network/posts';
+import { getPosts, addPost, updatePost } from '../../../network/posts';
 import {
   ADD_POST_REQUEST,
   GET_POSTS_REQUEST,
+  UPDATE_POST_REQUEST,
   getPostsAction,
   getPostsSuccess,
   getPostsFailure,
   addPostSuccess,
-  addPostFailure
+  addPostFailure,
+  updatePostSuccess,
+  updatePostFailure
 } from './actions';
 
 export function* initPostsSaga(action) {
@@ -22,12 +25,21 @@ export function* initPostsSaga(action) {
 }
 
 export function* addPostSaga(action) {
-  console.log(action);
   try {
-    const posts = yield call(addPost, action.payload.post);
+    yield call(addPost, action.payload.post);
     yield put(addPostSuccess());
   } catch (e) {
     yield put(addPostFailure());
+    console.log('Failed initializing the posts list.');
+  }
+}
+
+export function* updatePostSaga(action) {
+  try {
+    yield call(updatePost, action.payload.post);
+    yield put(updatePostSuccess(action.payload.post));
+  } catch (e) {
+    yield put(updatePostFailure());
     console.log('Failed initializing the posts list.');
   }
 }
@@ -36,5 +48,6 @@ export function* watchPostsSaga() {
   yield all([
     takeLatest([GET_POSTS_REQUEST], initPostsSaga),
     takeLatest([ADD_POST_REQUEST], addPostSaga),
+    takeLatest([UPDATE_POST_REQUEST], updatePostSaga),
   ])
 }

@@ -21,3 +21,13 @@ export const modalSelector = createSelector(
     postsDomain,
     (domain) => domain.isModalOpen
 );
+
+export const postSelector = createSelector(
+    postsDomain,
+    (domain) => domain.selectedPost
+);
+
+export const updatingSelector = createSelector(
+    postsDomain,
+    (domain) => domain.isUpdating
+);

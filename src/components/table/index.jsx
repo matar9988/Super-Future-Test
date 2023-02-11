@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import React from "react";
-import { getPostsRequest } from '../../store/modules/posts/actions';
+import { getPostsRequest, openModal, updatePost } from '../../store/modules/posts/actions';
 import "./index.css"
 
 let page = 0;
@@ -30,7 +30,7 @@ export default function Table(props) {
                                                 props.columns.find(col => col.key === "actions")['value'].map((action, indexAction) => (
                                                     <React.Fragment key={`row-${index}-action-${indexAction}`}>
                                                         {action == 'update' &&
-                                                            <button className="btn btn-info">
+                                                            <button className="btn btn-info" onClick={() => {dispatch(updatePost(row));dispatch(openModal())} }>
                                                                 <span className="glyphicon glyphicon-edit"></span> Edit
                                                             </button>}
 
@@ -51,7 +51,7 @@ export default function Table(props) {
                 </tbody>
             </table>
             <div className="pagination">
-                <button onClick={() => { page--; dispatch(getPostsRequest(page)) }}>❮</button>
+                <button onClick={() => { page--; dispatch(getPostsRequest(page)) }} disabled={!page}>❮</button>
                 <button onClick={() => { page++; dispatch(getPostsRequest(page)) }}>❯</button>
             </div>
         </>

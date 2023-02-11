@@ -15,3 +15,14 @@ export async function addPost(post) {
     });
     return res.json();
 }
+
+export async function updatePost(post) {
+    const res = await fetch(`${URL}/${post.id}`,{
+        method: 'PUT',
+        body: JSON.stringify(post),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return res.json();
+}

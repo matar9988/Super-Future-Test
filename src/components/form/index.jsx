@@ -1,26 +1,40 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import "./index.css"
-import { addPostRequest, closeModal } from "../../store/modules/posts/actions";
+import { addPostRequest, updatePostRequest, closeModal } from "../../store/modules/posts/actions";
 import { useDispatch } from "react-redux";
 
-export default function PostForm({post={userId:'',title:'',body:''}}) {
+export default function PostForm({ post = { userId: '', title: '', body: '', id }, isUpdating }) {
     const dispatch = useDispatch();
 
-    const submitPost = async (post) => {
-        dispatch(addPostRequest(post))
+    const submitAddPost = async (submittedData) => {
+        dispatch(addPostRequest(submittedData))
+    }
+
+    const submitEditPost = async (submittedData) => {
+        dispatch(updatePostRequest({ ...submittedData, id: post.id }))
+    }
+
+    const addPost = (values, { setSubmitting, resetForm }) => {
+        submitAddPost(values);
+        setSubmitting(false);
+        alert("Post Added!");
+        dispatch(closeModal())
+        resetForm();
+    };
+
+    const editPost = (values, { setSubmitting, resetForm }) => {
+        submitEditPost(values);
+        setSubmitting(false);
+        alert("Post Updated!");
+        dispatch(closeModal())
+        resetForm();
     }
 
     return (
         <Formik
-            initialValues={{ userId: post.userId, title: post.title, body: post.body}}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-                submitPost(values);
-                setSubmitting(false);
-                alert("Post Added!");
-                dispatch(closeModal())
-                resetForm();
-            }}
+            initialValues={{ userId: post.userId, title: post.title, body: post.body }}
+            onSubmit={isUpdating ? editPost : addPost}
             validate={(values) => {
                 const errors = {};
                 if (!values.userId) {
