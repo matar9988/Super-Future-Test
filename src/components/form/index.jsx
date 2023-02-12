@@ -1,11 +1,13 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useNavigate } from "react-router-dom";
 import "./index.css"
 import { addPostRequest, updatePostRequest, closeModal } from "../../store/modules/posts/actions";
 import { useDispatch } from "react-redux";
 
 export default function PostForm({ post = { userId: '', title: '', body: '', id: 0 }, isUpdating }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitAddPost = async (submittedData) => {
         dispatch(addPostRequest(submittedData))
@@ -18,13 +20,13 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id:
     const addPost = (values, { setSubmitting, resetForm }) => {
         submitAddPost(values);
         setSubmitting(false);
-        resetForm();
+        navigate("/")
     };
 
     const editPost = (values, { setSubmitting, resetForm }) => {
         submitEditPost(values);
         setSubmitting(false);
-        resetForm();
+        navigate("/")
     }
 
     return (
@@ -70,9 +72,7 @@ export default function PostForm({ post = { userId: '', title: '', body: '', id:
                         </div>
 
                     </div>
-                    <hr />
-                    <button type="submit" className="btn btn-primary btn-lg button" disabled={isSubmitting}>Submit</button>
-                    <button type="submit" className="btn btn-danger btn-lg button" onClick={() => dispatch(closeModal())}>Cancel</button>
+                    <button type="submit" className="btn btn-primary button" disabled={isSubmitting}>Submit</button>
                 </Form>
             )}
         </Formik>

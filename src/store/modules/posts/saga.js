@@ -30,12 +30,10 @@ export function* getPostsSaga(action) {
 
 export function* addPostSaga(action) {
   try {
-    yield call(addPost, action.payload.post);
-    yield put(closeModal());
-    yield put(addPostSuccess());
+    const post = yield call(addPost, action.payload.post);
+    yield put(addPostSuccess(post));
   } catch (e) {
     yield put(addPostFailure());
-    yield put(closeModal());
     console.log('Failed initializing the posts list.');
   }
 }
@@ -43,11 +41,9 @@ export function* addPostSaga(action) {
 export function* updatePostSaga(action) {
   try {
     yield call(updatePost, action.payload.post);
-    yield put(closeModal());
     yield put(updatePostSuccess(action.payload.post));
   } catch (e) {
     yield put(updatePostFailure());
-    yield put(closeModal());
     console.log('Failed initializing the posts list.');
   }
 }

@@ -40,8 +40,9 @@ export const addPostRequest = (post) => ({
     payload: { post }
 });
 
-export const addPostSuccess = () => ({
-    type: ADD_POST_SUCCESS
+export const addPostSuccess = (post) => ({
+    type: ADD_POST_SUCCESS,
+    payload: {post}
 });
 
 export const addPostFailure = () => ({

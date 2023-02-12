@@ -11,10 +11,12 @@ const initialState = {
 };
 
 
-const counterReducer = (state = initialState, action) => {
+const postReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Actions.GET_POSTS_ACTION:
-      return { ...state, data: action.payload.posts };
+    case Actions.GET_POSTS_ACTION: {
+      let data = [...state.data, ...action.payload.posts]
+      return { ...state, data };
+    }
 
     case Actions.DELETE_POST_REQUEST:
     case Actions.UPDATE_POST_REQUEST:
@@ -38,6 +40,7 @@ const counterReducer = (state = initialState, action) => {
     }
 
     case Actions.ADD_POST_SUCCESS:
+      return { ...state, loading: false, error: { exist: false, message: '' },data: [action.payload.post, ...state.data] };
     case Actions.GET_POSTS_SUCCESS:
       return { ...state, loading: false, error: { exist: false, message: '' } };
 
@@ -68,7 +71,7 @@ const counterReducer = (state = initialState, action) => {
       Actions.openModal();
       return { ...state, selectedPost: action.payload.post, isDeleting: true, isUpdating: false };
     }
-    
+
     case Actions.REMOVE_FAILURE:
       return { ...state, error: { exist: false, message: '' } };
 
@@ -77,4 +80,4 @@ const counterReducer = (state = initialState, action) => {
   }
 };
 
-export default counterReducer;
+export default postReducer;
