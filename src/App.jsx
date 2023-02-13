@@ -41,7 +41,7 @@ function App() {
             <Route index element={<PostsList />} />
             <Route exact path="create-post" element={<CreatePost />} />
             <Route exact path="edit-post" element={<EditPost />} />
-            <Route path="*" element={<div>wrong asnwoi</div>} />
+            <Route path="*" element={<PostsList />} />
           </Route>
         </Routes>
       </BrowserRouter>
