@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { dataSelector } from '../../store/modules/posts/selector';
-import Table from '../../components/table';
+import { dataSelector, hasMoreSelector } from '../../store/modules/posts/selector';
+import List from '../../components/list';
 import { getPostsRequest } from "../../store/modules/posts/actions";
 import "./index.css";
 
 export default function PostsList() {
     const posts = useSelector(dataSelector);
+    const hasMore = useSelector(hasMoreSelector);
     const dispatch = useDispatch();
+
     useEffect(() => {
         if(posts.length === 0)
             dispatch(getPostsRequest())
@@ -20,7 +22,7 @@ export default function PostsList() {
             <h4 className="title">
                 Posts List
             </h4>
-            <Table columns={columns} data={posts} />
+            <List columns={columns} data={posts} hasMore={hasMore} />
         </div>
     )
 }

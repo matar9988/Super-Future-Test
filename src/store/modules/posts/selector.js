@@ -36,3 +36,8 @@ export const deletingSelector = createSelector(
     postsDomain,
     (domain) => domain.isDeleting
 );
+
+export const hasMoreSelector = createSelector(
+    postsDomain,
+    (domain) => domain.hasMore
+);

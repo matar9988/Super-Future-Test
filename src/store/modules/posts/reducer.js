@@ -2,6 +2,7 @@ import * as Actions from './actions';
 
 const initialState = {
   data: [],
+  hasMore: true,
   loading: false,
   error: { exist: false, message: '' },
   isModalOpen: false,
@@ -14,13 +15,16 @@ const initialState = {
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.GET_POSTS_ACTION: {
+      if (action.payload.posts.length === 0 ) return {...state, hasMore: false}
       let data = [...state.data, ...action.payload.posts]
       return { ...state, data };
     }
 
+    case Actions.GET_POSTS_REQUEST:
+      return { ...state, error: { exist: false, message: '' } }
+
     case Actions.DELETE_POST_REQUEST:
     case Actions.UPDATE_POST_REQUEST:
-    case Actions.GET_POSTS_REQUEST:
     case Actions.ADD_POST_REQUEST:
       return { ...state, loading: true, error: { exist: false, message: '' } };
 
@@ -40,7 +44,8 @@ const postReducer = (state = initialState, action) => {
     }
 
     case Actions.ADD_POST_SUCCESS:
-      return { ...state, loading: false, error: { exist: false, message: '' },data: [action.payload.post, ...state.data] };
+      return { ...state, loading: false, error: { exist: false, message: '' }, data: [action.payload.post, ...state.data] };
+
     case Actions.GET_POSTS_SUCCESS:
       return { ...state, loading: false, error: { exist: false, message: '' } };
 
